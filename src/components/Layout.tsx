@@ -15,7 +15,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="container-center py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <img 
-              src="/public/lovable-uploads/25d343df-9b8a-48a8-8d5c-04d101cc5a2e.png" 
+              src="/public/herobackground.png" 
               alt="RADIIANT Logo" 
               className="h-10" 
             />
