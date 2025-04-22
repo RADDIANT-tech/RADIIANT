@@ -28,48 +28,81 @@ const RequestForm: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     setIsSubmitting(true);
-    
-    // Simulate API call
+  
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      
-      // If payment option is "payNow", we would redirect to Paystack
+      const scriptURL = "https://script.google.com/macros/s/AKfycbwm9ZPHvZSFD0Y_jf94k-eV8MIPFm8h064eDQCwtj48lvtqRx0GMNSJyVfkgRd21EPK/exec";
+
+      await fetch(scriptURL, {
+        method: "POST",
+        mode: "no-cors", // this avoids CORS issues
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+  
       if (formData.paymentOption === "payNow") {
-        // Here, we would normally initialize Paystack and redirect
-        console.log("Redirecting to payment gateway...");
-        // In a real implementation, you would use Paystack's API here
-        /*
-        const paystack = new PaystackPop();
-        paystack.newTransaction({
-          key: 'YOUR_PAYSTACK_PUBLIC_KEY',
-          email: formData.email,
-          amount: getSelectedServicePrice() * 100, // convert to kobo
-          onSuccess: (transaction) => {
-            // Handle successful payment
-            setIsSuccess(true);
-          },
-          onCancel: () => {
-            setIsSubmitting(false);
-          }
-        });
-        */
-      } else {
-        // For "Pay Later" option
-        setIsSuccess(true);
+        window.location.href = "https://paystack.com/pay/abetaq5oov";
+        return;
       }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    } finally {
-      // For demo purposes, we'll just set success
+  
       setIsSuccess(true);
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Something went wrong.");
+    } finally {
       setIsSubmitting(false);
     }
   };
+  
+  
+  
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+    
+  //   setIsSubmitting(true);
+    
+  //   // Simulate API call
+  //   try {
+  //     await new Promise((resolve) => setTimeout(resolve, 1500));
+      
+  //     // If payment option is "payNow", we would redirect to Paystack
+  //     if (formData.paymentOption === "payNow") {
+  //       // Here, we would normally initialize Paystack and redirect
+  //       console.log("Redirecting to payment gateway...");
+  //       // In a real implementation, you would use Paystack's API here
+  //       /*
+  //       const paystack = new PaystackPop();
+  //       paystack.newTransaction({
+  //         key: 'YOUR_PAYSTACK_PUBLIC_KEY',
+  //         email: formData.email,
+  //         amount: getSelectedServicePrice() * 100, // convert to kobo
+  //         onSuccess: (transaction) => {
+  //           // Handle successful payment
+  //           setIsSuccess(true);
+  //         },
+  //         onCancel: () => {
+  //           setIsSubmitting(false);
+  //         }
+  //       });
+  //       */
+  //     } else {
+  //       // For "Pay Later" option
+  //       setIsSuccess(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error submitting form:", error);
+  //   } finally {
+  //     // For demo purposes, we'll just set success
+  //     setIsSuccess(true);
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
 
   const getSelectedServicePrice = () => {
     const selected = services.find(s => s.id === formData.service);
