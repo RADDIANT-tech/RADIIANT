@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 
 const RequestForm: React.FC = () => {
@@ -10,7 +9,7 @@ const RequestForm: React.FC = () => {
     company: "",
     paymentOption: "payNow",
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -24,102 +23,55 @@ const RequestForm: React.FC = () => {
     { id: "other", name: "Other", price: 0 },
   ];
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
-    try {
-      const scriptURL = "https://script.google.com/macros/s/AKfycbwm9ZPHvZSFD0Y_jf94k-eV8MIPFm8h064eDQCwtj48lvtqRx0GMNSJyVfkgRd21EPK/exec";
 
-      await fetch(scriptURL, {
+    try {
+      const response = await fetch("/api/submit", {
         method: "POST",
-        mode: "no-cors", // this avoids CORS issues
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-  
+
+      if (!response.ok) throw new Error("Submission failed");
+
       if (formData.paymentOption === "payNow") {
         window.location.href = "https://paystack.com/pay/abetaq5oov";
         return;
       }
-  
+
       setIsSuccess(true);
     } catch (error) {
       console.error("Submission error:", error);
-      alert("Something went wrong.");
+      alert("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
-  
-  
-  
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-    
-  //   setIsSubmitting(true);
-    
-  //   // Simulate API call
-  //   try {
-  //     await new Promise((resolve) => setTimeout(resolve, 1500));
-      
-  //     // If payment option is "payNow", we would redirect to Paystack
-  //     if (formData.paymentOption === "payNow") {
-  //       // Here, we would normally initialize Paystack and redirect
-  //       console.log("Redirecting to payment gateway...");
-  //       // In a real implementation, you would use Paystack's API here
-  //       /*
-  //       const paystack = new PaystackPop();
-  //       paystack.newTransaction({
-  //         key: 'YOUR_PAYSTACK_PUBLIC_KEY',
-  //         email: formData.email,
-  //         amount: getSelectedServicePrice() * 100, // convert to kobo
-  //         onSuccess: (transaction) => {
-  //           // Handle successful payment
-  //           setIsSuccess(true);
-  //         },
-  //         onCancel: () => {
-  //           setIsSubmitting(false);
-  //         }
-  //       });
-  //       */
-  //     } else {
-  //       // For "Pay Later" option
-  //       setIsSuccess(true);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error submitting form:", error);
-  //   } finally {
-  //     // For demo purposes, we'll just set success
-  //     setIsSuccess(true);
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
 
   const getSelectedServicePrice = () => {
-    const selected = services.find(s => s.id === formData.service);
-    return selected ? selected.price / 100 : 0; // Convert to currency units for display
+    const selected = services.find((s) => s.id === formData.service);
+    return selected ? selected.price / 100 : 0;
   };
 
   if (isSuccess) {
     return (
       <div className="bg-white p-8 rounded-lg shadow-md text-center">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
-        <h2 className="text-2xl font-bold text-green-600 mb-4">Request Submitted Successfully!</h2>
+        <h2 className="text-2xl font-bold text-green-600 mb-4">
+          Request Submitted Successfully!
+        </h2>
         <p className="text-gray-700 mb-6">
-          {formData.paymentOption === "payNow" 
-            ? "Your payment was processed successfully. Our team will be in touch with you shortly to discuss your project." 
-            : "We've received your service request. Our team will be in touch with you shortly to discuss your project and payment options."}
+          {formData.paymentOption === "payNow"
+            ? "Your payment was processed successfully. Our team will be in touch with you shortly."
+            : "We've received your service request. Our team will be in touch shortly."}
         </p>
         <p className="text-gray-600 mb-8">
           A confirmation email has been sent to {formData.email}
@@ -128,8 +80,8 @@ const RequestForm: React.FC = () => {
           <a href="/" className="btn-primary">
             Return Home
           </a>
-          <button 
-            onClick={() => setIsSuccess(false)} 
+          <button
+            onClick={() => setIsSuccess(false)}
             className="btn-secondary"
           >
             Submit Another Request
@@ -141,6 +93,7 @@ const RequestForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
+      {/* Service Select */}
       <div className="mb-6">
         <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-1">
           Select Service *
@@ -156,12 +109,13 @@ const RequestForm: React.FC = () => {
           <option value="">Select a service</option>
           {services.map((service) => (
             <option key={service.id} value={service.id}>
-              {service.name} {service.price > 0 ? `($${service.price / 100})` : ''}
+              {service.name} {service.price > 0 ? `($${service.price / 100})` : ""}
             </option>
           ))}
         </select>
       </div>
 
+      {/* Details */}
       <div className="mb-6">
         <label htmlFor="details" className="block text-sm font-medium text-gray-700 mb-1">
           Tell us more about what you need
@@ -172,11 +126,12 @@ const RequestForm: React.FC = () => {
           rows={4}
           value={formData.details}
           onChange={handleChange}
-          placeholder="Describe your requirements, timeline, and any specific features you're looking for..."
+          placeholder="Describe your requirements..."
           className="input-field"
         />
       </div>
 
+      {/* Name & Email */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
           <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -190,7 +145,6 @@ const RequestForm: React.FC = () => {
             onChange={handleChange}
             required
             className="input-field"
-            placeholder="Your full name"
           />
         </div>
 
@@ -206,11 +160,11 @@ const RequestForm: React.FC = () => {
             onChange={handleChange}
             required
             className="input-field"
-            placeholder="you@company.com"
           />
         </div>
       </div>
 
+      {/* Company */}
       <div className="mb-8">
         <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
           Company Name (Optional)
@@ -222,55 +176,50 @@ const RequestForm: React.FC = () => {
           value={formData.company}
           onChange={handleChange}
           className="input-field"
-          placeholder="Your company name"
         />
       </div>
 
+      {/* Payment Option */}
       <div className="mb-8">
         <label className="block text-sm font-medium text-gray-700 mb-3">
           Payment Option
         </label>
         <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex items-center">
+          <label className="flex items-center">
             <input
               type="radio"
-              id="payNow"
               name="paymentOption"
               value="payNow"
               checked={formData.paymentOption === "payNow"}
               onChange={handleChange}
               className="h-4 w-4 text-radiiant-navy focus:ring-radiiant-navy border-gray-300"
             />
-            <label htmlFor="payNow" className="ml-2 block text-sm text-gray-700">
-              Pay Now (Paystack)
-            </label>
-          </div>
-          <div className="flex items-center">
+            <span className="ml-2 text-sm">Pay Now (Paystack)</span>
+          </label>
+          <label className="flex items-center">
             <input
               type="radio"
-              id="payLater"
               name="paymentOption"
               value="payLater"
               checked={formData.paymentOption === "payLater"}
               onChange={handleChange}
               className="h-4 w-4 text-radiiant-navy focus:ring-radiiant-navy border-gray-300"
             />
-            <label htmlFor="payLater" className="ml-2 block text-sm text-gray-700">
-              Pay Later (Contact Me First)
-            </label>
-          </div>
+            <span className="ml-2 text-sm">Pay Later (Contact Me First)</span>
+          </label>
         </div>
       </div>
 
+      {/* Price Summary */}
       {formData.service && formData.paymentOption === "payNow" && (
         <div className="mb-8 p-4 border border-gray-200 rounded-md bg-gray-50">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between">
             <span className="font-medium text-gray-700">Selected Service:</span>
             <span className="font-bold text-radiiant-navy">
-              {services.find(s => s.id === formData.service)?.name}
+              {services.find((s) => s.id === formData.service)?.name}
             </span>
           </div>
-          <div className="flex justify-between items-center mt-2">
+          <div className="flex justify-between mt-2">
             <span className="font-medium text-gray-700">Amount:</span>
             <span className="font-bold text-radiiant-navy">
               ${getSelectedServicePrice().toFixed(2)}
@@ -279,12 +228,13 @@ const RequestForm: React.FC = () => {
         </div>
       )}
 
+      {/* Submit Button */}
       <button
         type="submit"
         disabled={isSubmitting}
         className={`w-full bg-radiiant-navy text-white px-6 py-3 rounded-md font-medium
-        hover:bg-opacity-90 transition-all duration-300 flex justify-center items-center
-        ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
+          hover:bg-opacity-90 transition-all duration-300 flex justify-center items-center
+          ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
       >
         {isSubmitting ? (
           <>
