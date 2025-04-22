@@ -97,7 +97,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div>
               <h4 className="font-bold text-lg mb-4">Connect With Us</h4>
               <div className="flex items-center gap-4 mb-4">
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-radiiant-gold transition-colors">
+                <a href="https://www.linkedin.com/company/radiiant" target="_blank" rel="noopener noreferrer" className="hover:text-radiiant-gold transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
                 </a>
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-radiiant-gold transition-colors">
@@ -107,8 +107,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
                 </a>
               </div>
-              <p className="text-gray-300">Email: info@radiiant.com</p>
-              <p className="text-gray-300">Phone: +234 123 456 7890</p>
+              <p className="text-gray-300">Email: radiiant.solutions@gmail.com</p>
+              <p className="text-gray-300">Phone: +233 54 387 6146</p>
             </div>
           </div>
           

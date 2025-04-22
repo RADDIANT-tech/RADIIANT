@@ -11,28 +11,28 @@ const CompanyInfo: React.FC = () => {
         manage operations, engage customers, and track performance effectively.
       </p>
       
-      <h4 className="text-lg font-semibold mb-2 text-radiiant-navy">Our Office</h4>
+      {/* <h4 className="text-lg font-semibold mb-2 text-radiiant-navy">Our Office</h4>
       <p className="text-gray-700 mb-2">
         Tech Park Tower, 5th Floor<br />
         123 Innovation Avenue<br />
-        Lagos, Nigeria
+        Accra, Ghana
       </p>
-      
+       */}
       <h4 className="text-lg font-semibold mb-2 mt-6 text-radiiant-navy">Contact Information</h4>
       <p className="text-gray-700 mb-1">
-        <span className="font-medium">Email:</span> info@radiiant.com
+        <span className="font-medium">Email:</span> radiiant.solutions@gmail.com
       </p>
       <p className="text-gray-700 mb-1">
-        <span className="font-medium">Phone:</span> +234 123 456 7890
+        <span className="font-medium">Phone:</span> +233 54 387 6146
       </p>
       <p className="text-gray-700 mb-6">
-        <span className="font-medium">Hours:</span> Monday-Friday, 9AM-5PM WAT
+        <span className="font-medium">Hours:</span> Monday-Friday, 9AM-5PM GMT
       </p>
       
       <h4 className="text-lg font-semibold mb-4 text-radiiant-navy">Connect With Us</h4>
       <div className="flex space-x-4">
         <a
-          href="https://linkedin.com"
+          href="https://www.linkedin.com/company/radiiant"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-radiiant-navy text-white p-2 rounded-full hover:bg-opacity-90 transition-colors"
