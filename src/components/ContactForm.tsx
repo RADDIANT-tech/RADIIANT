@@ -22,9 +22,12 @@ const ContactForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setIsSuccess(true);
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
