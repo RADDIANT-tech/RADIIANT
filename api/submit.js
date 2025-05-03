@@ -1,5 +1,17 @@
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '1mb',
+    },
+  },
+};
+
+
+
 export default async function handler(req, res) {
     if (req.method !== "POST") {
+      console.log("📥 Incoming data:", req.body);
+
       return res.status(405).json({ error: "Method Not Allowed" });
     }
   
