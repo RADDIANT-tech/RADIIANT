@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   // Log the incoming data to debug
   console.log("📥 Incoming data:", req.body);
 
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwm9ZPHvZSFD0Y_jf94k-eV8MIPFm8h064eDQCwtj48lvtqRx0GMNSJyVfkgRd21EPK/exec";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1tG-XITxvHcVO-l3Ib6dVex4SMUQxnRnO_AA2A0UGbCLQdovHstMn-FrU1Z-FoOxf/exec";
 
   try {
     const response = await fetch(GOOGLE_SCRIPT_URL, {
