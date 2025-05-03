@@ -6,6 +6,7 @@ const RequestForm: React.FC = () => {
     details: "",
     fullName: "",
     email: "",
+    phoneNumber: "",
     company: "",
     paymentOption: "payNow",
   });
@@ -16,7 +17,7 @@ const RequestForm: React.FC = () => {
   const services = [
     { id: "bms", name: "Business Management Systems", price: 49900 },
     { id: "crm", name: "Customer Relationship Management", price: 39900 },
-    { id: "sms", name: "SMS Campaign Management", price: 29900 },
+    { id: "sms", name: "SMS Marketing", price: 29900 },
     { id: "api", name: "Data Provisioning APIs", price: 59900 },
     { id: "custom", name: "Custom Software Development", price: 99900 },
     { id: "pos", name: "Modern Point-of-Sale Systems", price: 49900 },
@@ -108,10 +109,11 @@ const RequestForm: React.FC = () => {
         >
           <option value="">Select a service</option>
           {services.map((service) => (
-            <option key={service.id} value={service.id}>
-              {service.name} {service.price > 0 ? `($${service.price / 100})` : ""}
-            </option>
-          ))}
+  <option key={service.id} value={service.id}>
+    {service.name} {service.price > 0 ? `(Starting from GHC ${service.price / 100})` : ""}
+  </option>
+))}
+
         </select>
       </div>
 
@@ -131,7 +133,7 @@ const RequestForm: React.FC = () => {
         />
       </div>
 
-      {/* Name & Email */}
+      {/* Name, Email, Phone */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
           <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -162,6 +164,23 @@ const RequestForm: React.FC = () => {
             className="input-field"
           />
         </div>
+      </div>
+
+      {/* Phone */}
+      <div className="mb-6">
+        <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
+          Phone Number *
+        </label>
+        <input
+          type="tel"
+          id="phoneNumber"
+          name="phoneNumber"
+          value={formData.phoneNumber}
+          onChange={handleChange}
+          required
+          className="input-field"
+          placeholder="+233 55 000 0000"
+        />
       </div>
 
       {/* Company */}
